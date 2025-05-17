@@ -29,6 +29,12 @@ jobs:
         cd app
         python -c "import app"
 
+    - name: Run tests with pytest
+      run: |
+        cd app
+        pip install pytest
+        pytest
+
     - name: Build Docker image
       run: |
         cd app
