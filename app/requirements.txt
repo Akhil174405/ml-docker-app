@@ -7,3 +7,4 @@ jinja2
 scikit-learn
 pydantic
 python-multipart
+pytest
