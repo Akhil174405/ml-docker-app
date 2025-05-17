@@ -21,15 +21,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        cd ml-docker-app/app
+        cd app
         pip install -r requirements.txt
 
     - name: Run a simple test (import app)
       run: |
-        cd ml-docker-app/app
+        cd app
         python -c "import app"
 
     - name: Build Docker image
       run: |
-        cd ml-docker-app/app
+        cd app
         docker build -t my-ml-docker-app:latest .
