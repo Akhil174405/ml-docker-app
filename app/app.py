@@ -11,7 +11,7 @@ import json
 
 app = FastAPI()
 
-USE_REDIS = True  # Set False to disable Redis locally
+USE_REDIS = os.getenv('RUNNING_IN_DOCKER', '0') == '1'
 
 if USE_REDIS:
     import redis
@@ -59,7 +59,7 @@ def predict_species(features):
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 
 @app.post("/predict-form")
