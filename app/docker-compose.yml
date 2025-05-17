@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    container_name: flask-web-ml-test-FastAPI
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_DB=${REDIS_DB}
+    networks:
+      - irisnet
+    restart: unless-stopped
+
+  redis:
+    image: redis:alpine
+    container_name: redis-server
+    volumes:
+      - redis_data:/data
+    networks:
+      - irisnet
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  irisnet:
+    driver: bridge

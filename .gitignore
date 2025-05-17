@@ -1,0 +1,24 @@
+# .gitignore for Python & Docker
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+.env
+.env.*
+*.env
+*.DS_Store
+.vscode/
+.idea/
+*.egg-info/
+dist/
+build/
+*.bak
+*.swp
+# Docker
+*.pid
+*.sock
+# Model files (if you don't want to commit them)
+# *.pkl  # Uncomment to ignore model files in production or team projects
