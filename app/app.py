@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request, HTTPException, Form
 from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, AfterValidator
 from typing import Annotated
 import numpy as np
 import joblib
@@ -28,14 +28,15 @@ target_names = ['setosa', 'versicolor', 'virginica']
 templates = Jinja2Templates(directory="templates")
 
 
-class Features(BaseModel):
-    features: list[float]
+def features_length_validator(v: list[float]) -> list[float]:
+    if len(v) != 4:
+        raise ValueError('features must be a list of exactly 4 floats')
+    return v
 
-    @validator('features')
-    def validate_features_length(cls, v):
-        if len(v) != 4:
-            raise ValueError('features must be a list of exactly 4 floats')
-        return v
+FeaturesList = Annotated[list[float], AfterValidator(features_length_validator)]
+
+class Features(BaseModel):
+    features: FeaturesList
 
 def predict_species(features):
     prediction = model.predict([np.array(features)])
